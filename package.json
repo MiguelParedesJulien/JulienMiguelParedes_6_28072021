@@ -1,0 +1,19 @@
+{
+   "name": "fisheye",
+   "version": "1.0.0",
+   "description": "Site web de photographes freelances",
+   "main": "index.js",
+   "scripts": {
+      "sass": "sass --watch ./sass/main.scss:./css/style.css"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/MiguelParedesJulien/JulienMiguelParedes_6_28072021.git"
+   },
+   "author": "Julien Miguel Paredes",
+   "license": "ISC",
+   "bugs": {
+      "url": "https://github.com/MiguelParedesJulien/JulienMiguelParedes_6_28072021/issues"
+   },
+   "homepage": "https://github.com/MiguelParedesJulien/JulienMiguelParedes_6_28072021#readme"
+}
