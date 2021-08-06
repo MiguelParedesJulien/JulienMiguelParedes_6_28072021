@@ -1,0 +1,7 @@
+@mixin tag-box {
+   border: 0.5px solid $border-color;
+   border-radius: 11px;
+   padding: 0 0.6rem;
+   margin: 0 0.1rem;
+   align-self: center;
+}

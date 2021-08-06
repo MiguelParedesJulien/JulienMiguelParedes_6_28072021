@@ -1,0 +1,15 @@
+.header__photographer {
+   @media (max-width: 768px) {
+      margin-bottom: 0.5rem;
+   }
+}
+
+.header__logo {
+   text-align: left;
+   &__svg {
+      @media (max-width: 1239px) {
+         width: 180px;
+         padding-left: 20px;
+      }
+   }
+}
