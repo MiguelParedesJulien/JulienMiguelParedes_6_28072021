@@ -15,7 +15,7 @@
          "id": 930,
          "city": "Paris",
          "country": "France",
-         "tags": ["sports", "architecture"],
+         "tags": ["sport", "architecture"],
          "tagline": "Capturer des compositions complexes",
          "price": 250,
          "portrait": "EllieRoseWilkens.jpg"
@@ -96,7 +96,7 @@
          "id": 9275938,
          "photographerId": 82,
          "title": "Wedding Gazebo",
-         "image": "Event-_WeddingGazebo.jpg",
+         "image": "Event_WeddingGazebo.jpg",
          "tags": ["events"],
          "likes": 69,
          "date": "2018-02-22",

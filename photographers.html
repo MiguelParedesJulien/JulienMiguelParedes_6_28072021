@@ -10,7 +10,7 @@
       <title>Photographe</title>
    </head>
    <body>
-      <div class="main__conteneur">
+      <div class="main__container">
          <header class="header__photographer">
             <a href="./index.html" class="header__logo" aria-label="Lien vers la page d'accueil">
                <svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg" class="header__logo__svg">
@@ -43,7 +43,7 @@
             </a>
          </header>
 
-         <main id="main__photographer">
+         <main id="js-document">
             <article class="photographPage__head">
                <section class="photographPage__head__descript">
                   <h1 class="photographPage__head__descript-name"></h1>
@@ -58,8 +58,23 @@
                   <div class="photographPage__head__id-photo"></div>
                </section>
             </article>
+            <article class="sortWrapper">
+               <section tabindex="0" id="sortby">Trier par</section>
+               <section class="sortWrapper__select" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="sortby" tabindex="0">
+                  <div class="sortWrapper__select-trigger" role="button">
+                     <h3>Popularité</h3>
+                     <div class="arrow"></div>
+                  </div>
+                  <div class="sortWrapper__options">
+                     <h3 class="sortWrapper__options-value selected" data-value="popularite" tabindex="-1">Popularité</h3>
+                     <h3 class="sortWrapper__options-value white" data-value="date" tabindex="-1">Date</h3>
+                     <h3 class="sortWrapper__options-value white" data-value="titre" tabindex="-1">Titre</h3>
+                  </div>
+               </section>
+            </article>
             <article class="gallery"></article>
          </main>
       </div>
+      <script src="./photographers.js"></script>
    </body>
 </html>

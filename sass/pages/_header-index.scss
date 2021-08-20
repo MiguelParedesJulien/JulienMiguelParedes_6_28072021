@@ -108,3 +108,37 @@ nav {
       justify-content: center;
    }
 }
+
+#topLink {
+   position: fixed;
+   left: 50%;
+   width: 182px;
+   height: 30px;
+   transform: translateX(-50%);
+   background: #db8876;
+   color: black;
+   text-decoration: none;
+   border-radius: 5px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   transition: all 0.4s ease;
+   font-size: 18px;
+   font-weight: 700;
+   z-index: 5;
+
+   &:visited {
+      color: initial;
+   }
+}
+
+.hide {
+   display: none;
+   top: -35px;
+   opacity: 0;
+   transition: all 0.4s ease;
+}
+.show {
+   opacity: 1;
+   top: 20px;
+}
