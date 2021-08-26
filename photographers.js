@@ -15,11 +15,10 @@ if (params && params.get("id")) {
             console.log(newList);
             sortBy(newList);
             showGallery(newList);
+            lightbox();
          });
       }
    });
-} else {
-   errorMsg();
 }
 
 /**
@@ -75,8 +74,6 @@ function showHeaderPhotograph(photographerId) {
          photographerPortrait.setAttribute("alt", `Photo de profil de ${photographers[i].name}`);
          photographerPortrait.setAttribute("tabindex", "0");
          photo.appendChild(photographerPortrait);
-
-         const photographPrice = document.querySelector(".likeAndPrice__price");
       }
    }
 }
@@ -182,6 +179,138 @@ class Media {
    }
 }
 
+// Light Box
+
+function lightbox() {
+   // Selection des éléments requis
+   const gallery = document.querySelectorAll(".gallery__sample img, video"),
+      previewBox = document.querySelector(".preview-box"),
+      previewImg = previewBox.querySelector("img"),
+      header = document.querySelector("header"),
+      closeIcon = previewBox.querySelector(".imgBox__close"),
+      currentImg = previewBox.querySelector(".current-img"),
+      shadow = document.querySelector(".shadow"); // Une fois la fenêtre chargée
+
+   for (let i = 0; i < gallery.length; i++) {
+      const prevBtn = document.querySelector(".prev");
+      const nextBtn = document.querySelector(".next");
+
+      let newIndex = i; // On passe i comme valeur à la variable newIndex
+      let clickImgIndex;
+
+      const openLightBox = () => {
+         previewBox.setAttribute("aria-hidden", false);
+         //doc.setAttribute("aria-hidden", "true");
+         header.setAttribute("aria-hidden", "true");
+         prevBtn.setAttribute("tabindex", "0");
+         nextBtn.setAttribute("tabindex", "0");
+         closeIcon.setAttribute("tabindex", "0");
+         // closeIcon.focus();
+
+         // prevBtn.focus();
+         clickImgIndex = newIndex; // On passe l'index de l'image cliquée à la variable clickImgIndex
+         // currentImg.children[0].remove();
+         const video = document.createElement("video");
+
+         function preview() {
+            let selectedItemUrl = gallery[newIndex].src; // Obtenir l'url de l'image cliquée
+            previewImg.src = selectedItemUrl; // Passe la source de l'image cliquée dans la lightbox
+
+            console.log(selectedItemUrl);
+            console.log(currentImg.children[0]);
+
+            if (selectedItemUrl.includes("mp4")) {
+               currentImg.children[0].remove();
+
+               const error = document.createElement("p");
+               error.innerHTML = "Votre navigateur ne prend pas en charge ce format de vidéo. Pensez à le mettre à jour";
+               const subtitles = document.createElement("track");
+               subtitles.setAttribute("src", `${selectedItemUrl.replace("mp4", "vtt")}`);
+               subtitles.setAttribute("label", "Français");
+               subtitles.setAttribute("kind", "subtitles");
+               subtitles.setAttribute("srclang", "fr");
+               subtitles.setAttribute("default", "");
+               video.setAttribute("src", selectedItemUrl);
+               video.setAttribute("autoplay", "");
+               video.setAttribute("controls", "");
+               video.appendChild(subtitles);
+               video.appendChild(error);
+               currentImg.appendChild(video);
+            }
+            if (selectedItemUrl.includes("jpg")) {
+               currentImg.children[0].remove();
+               const img = document.createElement("img");
+               img.setAttribute("src", selectedItemUrl);
+               currentImg.appendChild(img);
+            }
+         }
+
+         preview(); // Appelle fonction preview
+
+         function previous() {
+            newIndex--; // Enlève 1 à l'index de l'image à afficher
+            if (newIndex < 0) {
+               newIndex = gallery.length - 1;
+            }
+            preview();
+         }
+
+         prevBtn.addEventListener("click", previous);
+
+         function next() {
+            newIndex++; // Enlève 1 à l'index de l'image à afficher
+            if (newIndex > gallery.length - 1) {
+               newIndex = 0;
+            }
+            preview();
+         }
+
+         nextBtn.addEventListener("click", next);
+
+         previewBox.classList.add("show");
+         shadow.style.display = "block";
+         document.querySelector("body").style.overflow = "hidden";
+
+         function closeLightBox() {
+            previewBox.setAttribute("aria-hidden", true);
+            //doc.setAttribute("aria-hidden", false);
+            video.removeAttribute("autoplay");
+            previewBox.classList.remove("show");
+            prevBtn.style.display = "block";
+            nextBtn.style.display = "block";
+            newIndex = clickImgIndex; // Assigner index de la première image cliquée à la variable newIndex
+            shadow.style.display = "none";
+            document.querySelector("body").style.overflow = "auto";
+         }
+
+         closeIcon.addEventListener("click", closeLightBox);
+
+         document.addEventListener("keydown", (e) => {
+            console.log(e.code);
+            if (e.code == "ArrowLeft") {
+               previous();
+            }
+
+            if (e.code == "ArrowRight") {
+               next();
+            }
+            if (e.code == "Escape") {
+               closeLightBox();
+            }
+         });
+      };
+
+      gallery[i].addEventListener("click", openLightBox);
+
+      gallery[i].addEventListener("keydown", (e) => {
+         // console.log(e.code);
+         if (e.code == "Enter" || e.code == "NumpadEnter") {
+            openLightBox();
+         }
+      });
+   }
+}
+
 function showGallery(list) {
    // const galleryContainer = document.querySelector(".gallery");
 
@@ -281,6 +410,7 @@ function sortBy(newList) {
             showGallery(sortPics);
             sortSelect.focus();
          }
+         lightbox();
          sortWrapper.focus();
       }
    }
