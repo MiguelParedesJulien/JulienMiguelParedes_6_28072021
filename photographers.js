@@ -139,7 +139,7 @@ class Media {
       if (this.source.includes("mp4")) {
          const video = document.createElement("video");
          video.setAttribute("src", "./Photos/Portfolio/" + this.source);
-         //video.setAttribute("poster", `./Photos/Portfolio/mini${this.source.replace("mp4", "jpg")}`);
+         video.setAttribute("poster", `./Photos/Portfolio/mini${this.source.replace("mp4", "jpg")}`);
          video.setAttribute("alt", this.altText);
          video.setAttribute("tabindex", "0");
          const subtitles = document.createElement("track");
@@ -186,6 +186,7 @@ function lightbox() {
    const gallery = document.querySelectorAll(".gallery__sample img, video"),
       previewBox = document.querySelector(".preview-box"),
       previewImg = previewBox.querySelector("img"),
+      doc = document.querySelector("#js-document"),
       header = document.querySelector("header"),
       closeIcon = previewBox.querySelector(".imgBox__close"),
       currentImg = previewBox.querySelector(".current-img"),
@@ -200,7 +201,7 @@ function lightbox() {
 
       const openLightBox = () => {
          previewBox.setAttribute("aria-hidden", false);
-         //doc.setAttribute("aria-hidden", "true");
+         doc.setAttribute("aria-hidden", "true");
          header.setAttribute("aria-hidden", "true");
          prevBtn.setAttribute("tabindex", "0");
          nextBtn.setAttribute("tabindex", "0");
@@ -273,7 +274,7 @@ function lightbox() {
 
          function closeLightBox() {
             previewBox.setAttribute("aria-hidden", true);
-            //doc.setAttribute("aria-hidden", false);
+            doc.setAttribute("aria-hidden", false);
             video.removeAttribute("autoplay");
             previewBox.classList.remove("show");
             prevBtn.style.display = "block";

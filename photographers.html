@@ -91,6 +91,33 @@
          </div>
          <div class="shadow"></div>
       </main>
+      <div id="dialog" role="dialog" aria-label="Formulaire de contact" aria-modal="true" aria-hidden="true" tabindex="-1" class="dialog">
+         <div role="document" class="dialog__box">
+            <h2 class="dialog__box-name">Contactez-moi</h2>
+            <h2 class="dialog__box-contact">Mimi Keel</h2>
+            <button type="button" aria-label="Fermer" title="Fermer cette fenêtre modale" data-dismiss="dialog" class="dialog__box-close">X</button>
+
+            <form action="." method="POST" class="dialog__box-modal" id="formulaire">
+               <label for="prenom">Prénom</label><br />
+               <input type="text" id="prenom" name="prenom" required />
+               <span id="prenomErreur" class="error"></span>
+
+               <label for="nom">Nom</label><br />
+               <input type="text" id="nom" name="nom" required />
+               <span id="nomErreur" class="error"></span>
+
+               <label for="email">Email</label><br />
+               <input type="email" id="email" name="email" required />
+               <span id="emailErreur" class="error"></span>
+
+               <label for="msg">Votre message</label><br />
+               <textarea id="msg" name="msg" rows="4"></textarea>
+
+               <button type="submit" id="submit">Envoyer</button>
+            </form>
+         </div>
+      </div>
       <script src="./photographers.js"></script>
+      <script src="./modal.js"></script>
    </body>
 </html>
