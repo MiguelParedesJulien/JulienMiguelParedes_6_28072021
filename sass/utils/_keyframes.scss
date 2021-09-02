@@ -1,0 +1,23 @@
+@keyframes errorAnim {
+   0% {
+      color: $primary-color;
+   }
+   30% {
+      color: red;
+   }
+   100% {
+      color: $primary-color;
+   }
+}
+
+@keyframes likedHeart {
+   0% {
+   }
+   10% {
+      color: red;
+      text-shadow: 0 0 1px red, 0 0 2px red;
+   }
+   100% {
+      color: $primary-color;
+   }
+}

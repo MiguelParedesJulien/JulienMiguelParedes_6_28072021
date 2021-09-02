@@ -24,6 +24,26 @@ video::cue {
   border-radius: 20px;
 }
 
+@keyframes errorAnim {
+  0% {
+    color: #911c1c;
+  }
+  30% {
+    color: red;
+  }
+  100% {
+    color: #911c1c;
+  }
+}
+@keyframes likedHeart {
+  10% {
+    color: red;
+    text-shadow: 0 0 1px red, 0 0 2px red;
+  }
+  100% {
+    color: #911c1c;
+  }
+}
 @media (max-width: 768px) {
   .header__photographer {
     margin-bottom: 0.5rem;
@@ -148,17 +168,6 @@ video::cue {
   animation: errorAnim 3s ease infinite;
 }
 
-@keyframes errorAnim {
-  0% {
-    color: #911c1c;
-  }
-  30% {
-    color: red;
-  }
-  100% {
-    color: #911c1c;
-  }
-}
 .overlay {
   width: 100%;
   height: 100%;
@@ -764,11 +773,59 @@ nav {
   flex-grow: 3;
   font-weight: 400;
   color: #911c1c;
-  font-size: 24px;
+  font-size: 22px;
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.gallery__sample__descript-like {
+  font-weight: 500;
+  font-size: 24px;
+  color: #911c1c;
+  cursor: pointer;
+  align-self: flex-end;
+}
+.gallery__sample__descript-heart {
+  color: #911c1c;
+  font-size: 20px;
+  padding: 0 5px;
+}
+
+.unliked {
+  color: #911c1c;
+}
+
+.liked {
+  color: red;
+}
+
+.likedHeart {
+  animation: likedHeart 1.5s ease 1 forwards;
+}
+
+.likeAndPrice {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background: #db8876;
+  width: 376px;
+  height: 67px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  z-index: 5;
+}
+.likeAndPrice__like {
+  font-weight: 500;
+  font-size: 24px;
+}
+.likeAndPrice__price {
+  font-weight: 500;
+  font-size: 24px;
 }
 
 .preview-box {

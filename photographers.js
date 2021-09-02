@@ -16,6 +16,8 @@ if (params && params.get("id")) {
             sortBy(newList);
             showGallery(newList);
             lightbox();
+            liking();
+            showTotalLikesAndPrice();
          });
       }
    });
@@ -74,6 +76,11 @@ function showHeaderPhotograph(photographerId) {
          photographerPortrait.setAttribute("alt", `Photo de profil de ${photographers[i].name}`);
          photographerPortrait.setAttribute("tabindex", "0");
          photo.appendChild(photographerPortrait);
+
+         const photographPrice = document.querySelector(".likeAndPrice__price");
+         photographPrice.innerHTML = `${photographers[i].price}€ / jour`;
+         photographPrice.setAttribute("tabindex", "0");
+         photographPrice.setAttribute("aria-label", `Ses services vous seront facturés ${photographers[i].price} euros par jour`);
       }
    }
 }
@@ -136,6 +143,15 @@ class Media {
       name.setAttribute("aria-label", this.title);
       name.setAttribute("tabindex", "0");
 
+      const like = document.createElement("h3");
+      like.setAttribute("class", "gallery__sample__descript-like unliked");
+      like.innerHTML = this.likes;
+      like.setAttribute("tabindex", "0");
+      like.setAttribute("aria-label", "likes");
+
+      const heart = document.createElement("i");
+      heart.setAttribute("class", "fas fa-heart gallery__sample__descript-heart unliked");
+
       if (this.source.includes("mp4")) {
          const video = document.createElement("video");
          video.setAttribute("src", "./Photos/Portfolio/" + this.source);
@@ -172,8 +188,8 @@ class Media {
       imgContainer.appendChild(span);
       article.appendChild(descript);
       descript.appendChild(name);
-      //descript.appendChild(like);
-      //descript.appendChild(heart);
+      descript.appendChild(like);
+      descript.appendChild(heart);
 
       return article;
    }
@@ -322,6 +338,61 @@ function showGallery(list) {
    // sortBy(list);
 }
 
+// Fonction qui permet de liker les photos avec un compteur de like
+
+function liking() {
+   const likes = document.querySelectorAll(".gallery__sample__descript-like");
+
+   likes.forEach((like) => {
+      like.addEventListener("click", classToggle);
+
+      like.addEventListener("keydown", (e) => {
+         console.log(e.code);
+         if (e.code == "Enter" || e.code == "NumpadEnter") {
+            classToggle();
+         }
+      });
+
+      function classToggle() {
+         like.classList.toggle("liked");
+         like.classList.toggle("unliked");
+
+         if (like.classList.contains("liked")) {
+            like.innerText++;
+            like.classList.add("liked");
+            like.nextElementSibling.classList.add("likedHeart");
+            like.classList.remove("unliked");
+         } else if (like.classList.contains("unliked")) {
+            like.innerText--;
+            like.classList.add("unliked");
+            like.nextElementSibling.classList.remove("likedHeart");
+            like.classList.remove("liked");
+         }
+
+         console.log(like.nextElementSibling);
+
+         showTotalLikesAndPrice();
+      }
+   });
+}
+
+function showTotalLikesAndPrice() {
+   const totalLikes = document.querySelector(".likeAndPrice__like");
+   const likes = document.querySelectorAll(".gallery__sample__descript-like");
+
+   let sum = 0;
+   for (like = 0; like < likes.length; like++) {
+      let likeValue = parseInt(likes[like].textContent);
+      // console.log(likeValue);
+
+      sum = sum + likeValue;
+   }
+
+   totalLikes.innerHTML = sum + " <i class='fas fa-heart'></i>";
+   totalLikes.setAttribute("tabindex", "0");
+   totalLikes.setAttribute("aria-label", `En cumulé, les oeuvres de ce photographe on été aimées ${sum} fois.`);
+}
+
 // Bouton tri du contenu des photographes (date, popularité et titre)
 
 const sortWrapper = document.querySelector(".sortWrapper");
@@ -412,6 +483,7 @@ function sortBy(newList) {
             sortSelect.focus();
          }
          lightbox();
+         liking();
          sortWrapper.focus();
       }
    }

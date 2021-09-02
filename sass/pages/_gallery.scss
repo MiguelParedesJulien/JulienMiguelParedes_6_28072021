@@ -357,13 +357,63 @@
             flex-grow: 3;
             font-weight: 400;
             color: $primary-color;
-            font-size: 24px;
+            font-size: 22px;
             margin: 0;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
          }
+
+         &-like {
+            font-weight: 500;
+            font-size: 24px;
+            color: $primary-color;
+            cursor: pointer;
+            align-self: flex-end;
+         }
+
+         &-heart {
+            color: $primary-color;
+            font-size: 20px;
+            padding: 0 5px;
+         }
       }
+   }
+}
+
+.unliked {
+   color: $primary-color;
+}
+
+.liked {
+   color: red;
+}
+.likedHeart {
+   animation: likedHeart 1.5s ease 1 forwards;
+}
+
+.likeAndPrice {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-around;
+   align-items: center;
+   background: #db8876;
+   width: 376px;
+   height: 67px;
+   position: fixed;
+   bottom: 0;
+   right: 0;
+   border-top-left-radius: 5px;
+   border-top-right-radius: 5px;
+   z-index: 5;
+
+   &__like {
+      font-weight: 500;
+      font-size: 24px;
+   }
+   &__price {
+      font-weight: 500;
+      font-size: 24px;
    }
 }
 

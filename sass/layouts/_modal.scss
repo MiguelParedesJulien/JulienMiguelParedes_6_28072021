@@ -120,18 +120,6 @@
    animation: errorAnim 3s ease infinite;
 }
 
-@keyframes errorAnim {
-   0% {
-      color: $primary-color;
-   }
-   30% {
-      color: red;
-   }
-   100% {
-      color: $primary-color;
-   }
-}
-
 .overlay {
    width: 100%;
    height: 100%;
