@@ -322,7 +322,7 @@ function showGallery(list) {
    // sortBy(list);
 }
 
-// Bouton tri
+// Bouton tri du contenu des photographes (date, popularité et titre)
 
 const sortWrapper = document.querySelector(".sortWrapper");
 const sortSelect = document.querySelector(".sortWrapper__select");

@@ -247,6 +247,51 @@
    pointer-events: all;
 }
 
+.arrow {
+   position: relative;
+   height: 14px;
+   width: 7px;
+
+   &::before,
+   &::after {
+      content: "";
+      position: absolute;
+      bottom: 0px;
+      width: 0.2rem;
+      height: 100%;
+      transition: all 0.5s;
+   }
+
+   &::before {
+      left: -4px;
+      transform: rotate(45deg);
+      background-color: #fff;
+   }
+
+   &::after {
+      left: 4px;
+      transform: rotate(-45deg);
+      background-color: #fff;
+   }
+}
+
+.open .arrow::before {
+   left: -4px;
+   transform: rotate(-45deg);
+}
+
+.open .arrow::after {
+   left: 4px;
+   transform: rotate(45deg);
+}
+
+.black .arrow::before {
+   background-color: #000;
+}
+.black .arrow::after {
+   background-color: #000;
+}
+
 .gallery {
    display: flex;
    flex-direction: row;
@@ -395,12 +440,11 @@
    }
 
    &__close {
-      color: $primary-color;
       cursor: pointer;
       position: absolute;
-      font-size: 35px;
-      //font-weight: lighter;
-      right: -40px;
+      background: url(./svg/close_lightbox.svg) center center/42px 42px no-repeat;
+      right: -58px;
+      border: none;
 
       &:focus {
          font-size: 50px;

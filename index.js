@@ -67,7 +67,7 @@ function showPhotographers(photographData) {
 
       for (let t = 0; t < photographTag.length; t++) {
          const tagLink = document.createElement("a");
-         const span = document.createElement("h4");
+         const span = document.createElement("li");
          span.textContent = `#${photographTag[t].toLowerCase()}`;
          span.setAttribute("tabindex", 0);
          item.classList.add(`${photographTag[t].toLowerCase()}`);

@@ -111,7 +111,7 @@
       justify-content: center;
       flex-wrap: wrap;
 
-      h4 {
+      li {
          color: $primary-color;
          font-size: 12px;
          font-weight: bold;
@@ -121,6 +121,7 @@
          padding: 2px 10px;
          cursor: pointer;
          transition: all 0.3s ease;
+         list-style: none;
 
          &:hover {
             color: #fff;
