@@ -105,7 +105,7 @@ function showPhotographers(photographData) {
 
             if (photographTagFormat.indexOf(tagChoosen) !== -1 || tagChoosen == null) {
                photographe.style.display = "block";
-               console.log(photographTagFormat);
+               //console.log(photographTagFormat);
                break;
             } else {
                photographe.style.display = "none";

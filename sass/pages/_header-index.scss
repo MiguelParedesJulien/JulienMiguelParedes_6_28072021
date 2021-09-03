@@ -43,6 +43,10 @@ header {
    @media (max-width: 1239px) {
       flex-wrap: wrap;
    }
+   @media (max-width: 400px) {
+      flex-direction: column;
+      flex-wrap: unset;
+   }
 }
 
 .logo {
@@ -54,10 +58,13 @@ header {
       order: -2;
       min-width: 40%;
       &__svg {
-         width: 100px;
-         height: 25px;
+         width: 125px;
+         height: 52px;
          margin-left: 0;
          padding-left: 0;
+         @media (max-width: 400px) {
+            width: unset;
+         }
       }
    }
    @media (min-width: 769px) and (max-width: 1239px) {
@@ -70,6 +77,11 @@ header {
          margin-left: 0;
          padding-left: 0;
       }
+   }
+   @media (max-width: 400px) {
+      flex-direction: row;
+      flex-wrap: unset;
+      margin: auto;
    }
 }
 
@@ -94,6 +106,10 @@ nav {
       order: -1;
       min-width: 50%;
    }
+   @media (max-width: 400px) {
+      order: 0;
+      text-align: center;
+   }
 }
 
 .nav__ul {
@@ -101,6 +117,7 @@ nav {
       flex-wrap: wrap;
       margin: auto;
       justify-content: center;
+      padding-left: 0;
    }
    @media (min-width: 769px) and (max-width: 1239px) {
       flex-wrap: wrap;

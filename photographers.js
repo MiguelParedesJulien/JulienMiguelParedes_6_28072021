@@ -12,7 +12,7 @@ if (params && params.get("id")) {
             const newList = mediaList.map((element) => {
                return new Media(element);
             });
-            console.log(newList);
+            //console.log(newList);
             sortBy(newList);
             showGallery(newList);
             lightbox();
@@ -32,7 +32,7 @@ function fetchPhotographer(photographerId) {
          response.json().then(function (json) {
             photographData = json;
             const result = photographData.photographers.find((data) => data.id == photographerId);
-            console.log(result);
+            //console.log(result);
             showHeaderPhotograph(photographerId);
 
             if (result) {
@@ -95,7 +95,7 @@ function fetchMediaByPhotographer(photographerId) {
             photographData = json;
             const result = photographData.media.filter((data) => data.photographerId == photographerId);
 
-            console.log(result);
+            //console.log(result);
             resolve(result);
             //   sortBy(result);
          });
@@ -233,8 +233,8 @@ function lightbox() {
             let selectedItemUrl = gallery[newIndex].src; // Obtenir l'url de l'image cliquée
             previewImg.src = selectedItemUrl; // Passe la source de l'image cliquée dans la lightbox
 
-            console.log(selectedItemUrl);
-            console.log(currentImg.children[0]);
+            //console.log(selectedItemUrl);
+            //console.log(currentImg.children[0]);
 
             if (selectedItemUrl.includes("mp4")) {
                currentImg.children[0].remove();
@@ -303,7 +303,7 @@ function lightbox() {
          closeIcon.addEventListener("click", closeLightBox);
 
          document.addEventListener("keydown", (e) => {
-            console.log(e.code);
+            //console.log(e.code);
             if (e.code == "ArrowLeft") {
                previous();
             }
@@ -347,7 +347,7 @@ function liking() {
       like.addEventListener("click", classToggle);
 
       like.addEventListener("keydown", (e) => {
-         console.log(e.code);
+         //console.log(e.code);
          if (e.code == "Enter" || e.code == "NumpadEnter") {
             classToggle();
          }
@@ -369,7 +369,7 @@ function liking() {
             like.classList.remove("liked");
          }
 
-         console.log(like.nextElementSibling);
+         //console.log(like.nextElementSibling);
 
          showTotalLikesAndPrice();
       }
@@ -428,7 +428,7 @@ function sortBy(newList) {
       });
 
       value.addEventListener("keydown", (e) => {
-         console.log(e.code);
+         //console.log(e.code);
          if (e.code == "NumpadEnter") {
             sortMedias(value);
             sortSelect.focus();
@@ -440,7 +440,7 @@ function sortBy(newList) {
             value.parentNode.querySelector(".sortWrapper__options-value.selected").classList.remove("selected");
             value.classList.add("selected");
             value.closest(".sortWrapper__select").querySelector(".sortWrapper__select-trigger h3").textContent = value.textContent;
-            console.log(value.textContent);
+            //console.log(value.textContent);
          }
 
          if (value.textContent == "Date") {
@@ -452,7 +452,7 @@ function sortBy(newList) {
             });
             // galleryContainer.removeChild(childNodes);
 
-            console.log(sortPics);
+            //console.log(sortPics);
             showGallery(sortPics);
             sortSelect.focus();
          }
@@ -465,7 +465,7 @@ function sortBy(newList) {
             });
             // galleryContainer.removeChild(childNodes);
 
-            console.log(sortPics);
+            //console.log(sortPics);
             showGallery(sortPics);
             sortSelect.focus();
          }
@@ -478,7 +478,7 @@ function sortBy(newList) {
             });
             // galleryContainer.removeChild(childNodes);
 
-            console.log(sortPics);
+            //console.log(sortPics);
             showGallery(sortPics);
             sortSelect.focus();
          }
