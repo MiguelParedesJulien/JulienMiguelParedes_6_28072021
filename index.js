@@ -28,7 +28,6 @@ const photographList = document.querySelector(".photographersList");
  */
 function showPhotographers(photographData) {
    for (let i = 0; i < photographers.length; i++) {
-      // console.log(photographData["medias"]);
       const link = document.createElement("a");
       const item = document.createElement("article");
       const id = document.createElement("section");
@@ -40,8 +39,6 @@ function showPhotographers(photographData) {
       const phrase = document.createElement("h3");
       const price = document.createElement("h3");
       const tagContainer = document.createElement("section");
-
-      // console.log(sortTag);
 
       item.setAttribute("class", "photographItem");
       id.setAttribute("class", "photographItem__id");

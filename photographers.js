@@ -9,11 +9,9 @@ if (params && params.get("id")) {
          errorMsg();
       } else {
          fetchMediaByPhotographer(photographerId).then(function (mediaList) {
-            // console.log(mediaList);
             const newList = mediaList.map((element) => {
                return new Media(element);
             });
-            //console.log(newList);
             sortBy(newList);
             showGallery(newList);
             lightbox();
@@ -33,7 +31,6 @@ function fetchPhotographer(photographerId) {
          response.json().then(function (json) {
             photographData = json;
             const result = photographData.photographers.find((data) => data.id == photographerId);
-            //console.log(result);
             showHeaderPhotograph(photographerId);
 
             if (result) {
@@ -49,8 +46,6 @@ function fetchPhotographer(photographerId) {
  * @param  {number} photographerId // Afficher les informations du photographe dans le header récupérées selon son ID
  */
 function showHeaderPhotograph(photographerId) {
-   // console.log(photographData.photographers);
-   // console.log(photographerId);
    const photographers = photographData.photographers;
    for (i = 0; i < photographers.length; i++) {
       if (photographers[i].id == photographerId) {
@@ -95,10 +90,7 @@ function fetchMediaByPhotographer(photographerId) {
          response.json().then(function (json) {
             photographData = json;
             const result = photographData.media.filter((data) => data.photographerId == photographerId);
-
-            //console.log(result);
             resolve(result);
-            //   sortBy(result);
          });
       });
    });
@@ -170,7 +162,6 @@ class Media {
          errorMessage.textContent = "Votre navigateur ne peut pas lire le format de vidéo proposé. Pensez à le mettre à jour";
          video.appendChild(subtitles);
          video.appendChild(errorMessage);
-         // console.log(video);
 
          video.onclick = function () {
             video.setAttribute("autoplay", "");
@@ -223,9 +214,6 @@ function lightbox() {
          prevBtn.setAttribute("tabindex", "0");
          nextBtn.setAttribute("tabindex", "0");
          closeIcon.setAttribute("tabindex", "0");
-         // closeIcon.focus();
-
-         // prevBtn.focus();
          clickImgIndex = newIndex; // On passe l'index de l'image cliquée à la variable clickImgIndex
          // currentImg.children[0].remove();
          const video = document.createElement("video");
@@ -235,9 +223,6 @@ function lightbox() {
             previewImg.src = selectedItemUrl; // Passe la source de l'image cliquée dans la lightbox
             let altSelected = gallery[newIndex].alt; // Obtenir l'attribut alt de l'image cliquée
             previewImg.alt = altSelected; // Passe l'attribut alt de l'image cliquée dans la lightbox
-
-            //console.log(selectedItemUrl);
-            //console.log(currentImg.children[0]);
 
             if (selectedItemUrl.includes("mp4")) {
                currentImg.children[0].remove();
@@ -308,7 +293,6 @@ function lightbox() {
          closeIcon.addEventListener("click", closeLightBox);
 
          document.addEventListener("keydown", (e) => {
-            //console.log(e.code);
             if (e.code == "ArrowLeft") {
                previous();
             }
@@ -325,7 +309,6 @@ function lightbox() {
       gallery[i].addEventListener("click", openLightBox);
 
       gallery[i].addEventListener("keydown", (e) => {
-         // console.log(e.code);
          if (e.code == "Enter" || e.code == "NumpadEnter") {
             openLightBox();
          }
@@ -334,13 +317,9 @@ function lightbox() {
 }
 
 function showGallery(list) {
-   // const galleryContainer = document.querySelector(".gallery");
-
    list.forEach((media) => {
       galleryContainer.appendChild(media.getHtml());
    });
-
-   // sortBy(list);
 }
 
 // Fonction qui permet de liker les photos avec un compteur de like
@@ -352,7 +331,6 @@ function liking() {
       like.addEventListener("click", classToggle);
 
       like.addEventListener("keydown", (e) => {
-         //console.log(e.code);
          if (e.code == "Enter" || e.code == "NumpadEnter") {
             classToggle();
          }
@@ -373,9 +351,6 @@ function liking() {
             like.nextElementSibling.classList.remove("likedHeart");
             like.classList.remove("liked");
          }
-
-         //console.log(like.nextElementSibling);
-
          showTotalLikesAndPrice();
       }
    });
@@ -388,7 +363,6 @@ function showTotalLikesAndPrice() {
    let sum = 0;
    for (like = 0; like < likes.length; like++) {
       let likeValue = parseInt(likes[like].textContent);
-      // console.log(likeValue);
 
       sum = sum + likeValue;
    }
@@ -433,7 +407,6 @@ function sortBy(newList) {
       });
 
       value.addEventListener("keydown", (e) => {
-         //console.log(e.code);
          if (e.code == "NumpadEnter") {
             sortMedias(value);
             sortSelect.focus();
@@ -445,7 +418,6 @@ function sortBy(newList) {
             value.parentNode.querySelector(".sortWrapper__options-value.selected").classList.remove("selected");
             value.classList.add("selected");
             value.closest(".sortWrapper__select").querySelector(".sortWrapper__select-trigger h3").textContent = value.textContent;
-            //console.log(value.textContent);
          }
 
          if (value.textContent == "Date") {
@@ -455,9 +427,6 @@ function sortBy(newList) {
             const sortPics = newList.sort(function (a, b) {
                return new Date(a.date) - new Date(b.date);
             });
-            // galleryContainer.removeChild(childNodes);
-
-            //console.log(sortPics);
             showGallery(sortPics);
             sortSelect.focus();
          }
@@ -468,9 +437,6 @@ function sortBy(newList) {
             const sortPics = newList.sort(function (a, b) {
                return a.title.localeCompare(b.title);
             });
-            // galleryContainer.removeChild(childNodes);
-
-            //console.log(sortPics);
             showGallery(sortPics);
             sortSelect.focus();
          }
@@ -481,9 +447,6 @@ function sortBy(newList) {
             const sortPics = newList.sort(function (a, b) {
                return b.likes - a.likes;
             });
-            // galleryContainer.removeChild(childNodes);
-
-            //console.log(sortPics);
             showGallery(sortPics);
             sortSelect.focus();
          }
@@ -494,7 +457,6 @@ function sortBy(newList) {
    }
 
    window.addEventListener("click", function (e) {
-      // const select = document.querySelector('.custom-select')
       if (!sortSelect.contains(e.target)) {
          sortSelect.classList.remove("open");
          sortWrapper.focus();
