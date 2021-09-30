@@ -5,12 +5,18 @@ nav {
    justify-content: space-between;
 }
 
+a {
+   text-decoration: none;
+   color: black;
+}
+
 .tag {
    @include tag-box;
    cursor: pointer;
    color: $primary-color;
    display: flex;
-   &:hover {
+   &:hover,
+   &:focus {
       background-color: $primary-color;
       color: white;
       & span {
@@ -51,17 +57,16 @@ header {
 
 .logo {
    width: 200px;
-   text-align: center;
    flex: 1;
    @media (max-width: 768px) {
       margin-bottom: 1rem;
       order: -2;
       min-width: 40%;
       &__svg {
-         width: 125px;
+         width: 180px;
          height: 52px;
          margin-left: 0;
-         padding-left: 0;
+         padding-left: 20px;
          @media (max-width: 400px) {
             width: unset;
          }

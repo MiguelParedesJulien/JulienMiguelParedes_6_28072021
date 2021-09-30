@@ -1,5 +1,6 @@
 const params = new URLSearchParams(window.location.search);
 const photographerId = params.get("id");
+const alt = params.get("altText");
 const galleryContainer = document.querySelector(".gallery");
 
 if (params && params.get("id")) {
@@ -232,6 +233,8 @@ function lightbox() {
          function preview() {
             let selectedItemUrl = gallery[newIndex].src; // Obtenir l'url de l'image cliquée
             previewImg.src = selectedItemUrl; // Passe la source de l'image cliquée dans la lightbox
+            let altSelected = gallery[newIndex].alt; // Obtenir l'attribut alt de l'image cliquée
+            previewImg.alt = altSelected; // Passe l'attribut alt de l'image cliquée dans la lightbox
 
             //console.log(selectedItemUrl);
             //console.log(currentImg.children[0]);
@@ -248,6 +251,7 @@ function lightbox() {
                subtitles.setAttribute("srclang", "fr");
                subtitles.setAttribute("default", "");
                video.setAttribute("src", selectedItemUrl);
+               video.setAttribute("alt", altSelected);
                video.setAttribute("autoplay", "");
                video.setAttribute("controls", "");
                video.appendChild(subtitles);
@@ -258,6 +262,7 @@ function lightbox() {
                currentImg.children[0].remove();
                const img = document.createElement("img");
                img.setAttribute("src", selectedItemUrl);
+               img.setAttribute("alt", altSelected);
                currentImg.appendChild(img);
             }
          }
