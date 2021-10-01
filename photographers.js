@@ -10,7 +10,8 @@ if (params && params.get("id")) {
       } else {
          fetchMediaByPhotographer(photographerId).then(function (mediaList) {
             const newList = mediaList.map((element) => {
-               return new Media(element);
+               //return new Media(element);
+               return new mediaFactory(element);
             });
             sortBy(newList);
             showGallery(newList);
@@ -109,6 +110,17 @@ class Image {
       this.price = data.price;
       this.altText = data.altText;
    }
+
+   getImage() {
+      if (this.source.includes("jpg")) {
+         const image = document.createElement("img");
+         const span = document.createElement("span");
+         image.setAttribute("src", "./Photos/Portfolio/" + this.source);
+         image.setAttribute("alt", this.altText);
+         image.setAttribute("tabindex", "0");
+         span.appendChild(image);
+      }
+   }
 }
 
 class Video {
@@ -124,20 +136,86 @@ class Video {
       this.price = data.price;
       this.altText = data.altText;
    }
+
+   getVideo() {
+      if (this.source.includes("mp4")) {
+         const video = document.createElement("video");
+         const imgContainer = document.createElement("section");
+         imgContainer.setAttribute("class", "image");
+         video.setAttribute("src", "./Photos/Portfolio/" + this.source);
+         video.setAttribute("poster", `./Photos/Portfolio/mini${this.source.replace("mp4", "jpg")}`);
+         video.setAttribute("alt", this.altText);
+         video.setAttribute("tabindex", "0");
+         const subtitles = document.createElement("track");
+         subtitles.setAttribute("src", `./Photos/Portfolio/${this.source.replace("mp4", "vtt")}`);
+         subtitles.setAttribute("label", "Français");
+         subtitles.setAttribute("kind", "subtitles");
+         subtitles.setAttribute("srclang", "fr");
+         subtitles.setAttribute("default", "");
+         imgContainer.appendChild(video);
+         const errorMessage = document.createElement("p");
+         errorMessage.textContent = "Votre navigateur ne peut pas lire le format de vidéo proposé. Pensez à le mettre à jour";
+         video.appendChild(subtitles);
+         video.appendChild(errorMessage);
+
+         video.onclick = function () {
+            video.setAttribute("autoplay", "");
+         };
+      }
+   }
 }
 
 class mediaFactory {
    constructor(data) {
       if ("image" in data) {
-         return new Image(data);
+         let image = new Image(data);
+         image.getImage();
       }
       if ("video" in data) {
-         return new Video(data);
+         let video = new Video(data);
+         video.getVideo();
       }
+   }
+
+   getHtml() {
+      const article = document.createElement("article");
+      article.setAttribute("class", "gallery__sample");
+
+      const imgContainer = document.createElement("section");
+      imgContainer.setAttribute("class", "image");
+
+      const span = document.createElement("span");
+
+      const descript = document.createElement("section");
+      descript.setAttribute("class", "gallery__sample__descript");
+
+      const name = document.createElement("h2");
+      name.setAttribute("class", "gallery__sample__descript-name");
+      name.innerHTML = this.title;
+      name.setAttribute("aria-label", this.title);
+      name.setAttribute("tabindex", "0");
+
+      const like = document.createElement("h3");
+      like.setAttribute("class", "gallery__sample__descript-like unliked");
+      like.innerHTML = this.likes;
+      like.setAttribute("tabindex", "0");
+      like.setAttribute("aria-label", "likes");
+
+      const heart = document.createElement("i");
+      heart.setAttribute("class", "fas fa-heart gallery__sample__descript-heart unliked");
+
+      article.appendChild(imgContainer);
+      imgContainer.appendChild(span);
+      article.appendChild(descript);
+      descript.appendChild(name);
+      descript.appendChild(like);
+      descript.appendChild(heart);
+
+      return article;
    }
 }
 
-class Media {
+/*class Media {
    constructor(data) {
       this.id = data.id;
       this.photographerId = data.photographerId;
@@ -229,7 +307,7 @@ class Media {
 
       return article;
    }
-}
+}*/
 
 // Light Box
 
@@ -362,7 +440,11 @@ function lightbox() {
 
 function showGallery(list) {
    list.forEach((media) => {
-      galleryContainer.appendChild(media.getHtml());
+      //galleryContainer.appendChild(media.getHtml());
+      let mediaHtml = new mediaFactory(media);
+      galleryContainer.appendChild(mediaHtml.getHtml());
+      //galleryContainer.appendChild(mediaHtml.getImage());
+      //galleryContainer.appendChild(mediaHtml.getVideo());
    });
 }
 
