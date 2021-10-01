@@ -96,6 +96,47 @@ function fetchMediaByPhotographer(photographerId) {
    });
 }
 
+class Image {
+   constructor(data) {
+      this.source = data.image;
+      this.isVideo = false;
+      this.id = data.id;
+      this.photographerId = data.photographerId;
+      this.title = data.title;
+      this.tags = data.tags;
+      this.likes = data.likes;
+      this.date = data.date;
+      this.price = data.price;
+      this.altText = data.altText;
+   }
+}
+
+class Video {
+   constructor(data) {
+      this.source = data.video;
+      this.isVideo = true;
+      this.id = data.id;
+      this.photographerId = data.photographerId;
+      this.title = data.title;
+      this.tags = data.tags;
+      this.likes = data.likes;
+      this.date = data.date;
+      this.price = data.price;
+      this.altText = data.altText;
+   }
+}
+
+class mediaFactory {
+   constructor(data) {
+      if ("image" in data) {
+         return new Image(data);
+      }
+      if ("video" in data) {
+         return new Video(data);
+      }
+   }
+}
+
 class Media {
    constructor(data) {
       this.id = data.id;
@@ -110,11 +151,14 @@ class Media {
       if (data.image) {
          this.source = data.image;
          this.isVideo = false;
+         let test = new mediaFactory(data);
+         console.log(test);
       }
-
       if (data.video) {
          this.source = data.video;
          this.isVideo = true;
+         let test2 = new mediaFactory(data);
+         console.log(test2);
       }
    }
 
