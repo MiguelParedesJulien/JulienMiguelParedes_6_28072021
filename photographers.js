@@ -9,11 +9,12 @@ if (params && params.get("id")) {
          errorMsg();
       } else {
          fetchMediaByPhotographer(photographerId).then(function (mediaList) {
+            console.log(mediaList);
             const newList = mediaList.map((element) => {
-               //return new Media(element);
                return new mediaFactory(element);
             });
             sortBy(newList);
+            console.log(newList);
             showGallery(newList);
             lightbox();
             liking();
@@ -101,26 +102,16 @@ class Image {
    constructor(data) {
       this.source = data.image;
       this.isVideo = false;
-      this.id = data.id;
-      this.photographerId = data.photographerId;
-      this.title = data.title;
-      this.tags = data.tags;
-      this.likes = data.likes;
-      this.date = data.date;
-      this.price = data.price;
-      this.altText = data.altText;
    }
 
    getImage() {
-      if (this.source.includes("jpg")) {
-         const image = document.createElement("img");
-         console.log(image);
-         const span = document.createElement("span");
-         image.setAttribute("src", "./Photos/Portfolio/" + this.source);
-         image.setAttribute("alt", this.altText);
-         image.setAttribute("tabindex", "0");
-         span.appendChild(image);
-      }
+      const image = document.createElement("img");
+      image.setAttribute("src", "./Photos/Portfolio/" + this.source);
+      image.setAttribute("alt", this.altText);
+      image.setAttribute("tabindex", "0");
+
+      console.log(image);
+      return image;
    }
 }
 
@@ -128,41 +119,32 @@ class Video {
    constructor(data) {
       this.source = data.video;
       this.isVideo = true;
-      this.id = data.id;
-      this.photographerId = data.photographerId;
-      this.title = data.title;
-      this.tags = data.tags;
-      this.likes = data.likes;
-      this.date = data.date;
-      this.price = data.price;
-      this.altText = data.altText;
    }
 
    getVideo() {
-      if (this.source.includes("mp4")) {
-         const video = document.createElement("video");
-         const imgContainer = document.createElement("section");
-         imgContainer.setAttribute("class", "image");
-         video.setAttribute("src", "./Photos/Portfolio/" + this.source);
-         video.setAttribute("poster", `./Photos/Portfolio/mini${this.source.replace("mp4", "jpg")}`);
-         video.setAttribute("alt", this.altText);
-         video.setAttribute("tabindex", "0");
-         const subtitles = document.createElement("track");
-         subtitles.setAttribute("src", `./Photos/Portfolio/${this.source.replace("mp4", "vtt")}`);
-         subtitles.setAttribute("label", "Français");
-         subtitles.setAttribute("kind", "subtitles");
-         subtitles.setAttribute("srclang", "fr");
-         subtitles.setAttribute("default", "");
-         imgContainer.appendChild(video);
-         const errorMessage = document.createElement("p");
-         errorMessage.textContent = "Votre navigateur ne peut pas lire le format de vidéo proposé. Pensez à le mettre à jour";
-         video.appendChild(subtitles);
-         video.appendChild(errorMessage);
+      const video = document.createElement("video");
+      const imgContainer = document.createElement("section");
+      imgContainer.setAttribute("class", "image");
+      video.setAttribute("src", "./Photos/Portfolio/" + this.source);
+      video.setAttribute("poster", `./Photos/Portfolio/mini${this.source.replace("mp4", "jpg")}`);
+      video.setAttribute("alt", this.altText);
+      video.setAttribute("tabindex", "0");
+      const subtitles = document.createElement("track");
+      subtitles.setAttribute("src", `./Photos/Portfolio/${this.source.replace("mp4", "vtt")}`);
+      subtitles.setAttribute("label", "Français");
+      subtitles.setAttribute("kind", "subtitles");
+      subtitles.setAttribute("srclang", "fr");
+      subtitles.setAttribute("default", "");
+      const errorMessage = document.createElement("p");
+      errorMessage.textContent = "Votre navigateur ne peut pas lire le format de vidéo proposé. Pensez à le mettre à jour";
+      video.appendChild(subtitles);
+      video.appendChild(errorMessage);
 
-         video.onclick = function () {
-            video.setAttribute("autoplay", "");
-         };
-      }
+      video.onclick = function () {
+         video.setAttribute("autoplay", "");
+      };
+
+      return video;
    }
 }
 
@@ -177,17 +159,16 @@ class mediaFactory {
       this.price = data.price;
       this.altText = data.altText;
       if ("image" in data) {
-         return new Image(data);
-         //image.getImage();
+         this.source = data.image;
+         this.image = new Image(data);
       }
       if ("video" in data) {
-         return new Video(data);
-         //video.getVideo();
-         //console.log(video);
+         this.source = data.video;
+         this.video = new Video(data);
       }
    }
-
    getHtml() {
+      console.log("ici");
       const article = document.createElement("article");
       article.setAttribute("class", "gallery__sample");
 
@@ -213,6 +194,16 @@ class mediaFactory {
 
       const heart = document.createElement("i");
       heart.setAttribute("class", "fas fa-heart gallery__sample__descript-heart unliked");
+
+      if (this.source.includes("jpg")) {
+         console.log("1");
+         span.appendChild(this.image.getImage());
+      }
+
+      if (this.source.includes("mp4")) {
+         console.log("2");
+         imgContainer.appendChild(this.video.getVideo());
+      }
 
       article.appendChild(imgContainer);
       imgContainer.appendChild(span);
@@ -224,100 +215,6 @@ class mediaFactory {
       return article;
    }
 }
-
-/*class Media {
-   constructor(data) {
-      this.id = data.id;
-      this.photographerId = data.photographerId;
-      this.title = data.title;
-      this.tags = data.tags;
-      this.likes = data.likes;
-      this.date = data.date;
-      this.price = data.price;
-      this.altText = data.altText;
-
-      if (data.image) {
-         this.source = data.image;
-         this.isVideo = false;
-         let test = new mediaFactory(data);
-         console.log(test);
-      }
-      if (data.video) {
-         this.source = data.video;
-         this.isVideo = true;
-         let test2 = new mediaFactory(data);
-         console.log(test2);
-      }
-   }
-
-   getHtml() {
-      const article = document.createElement("article");
-      article.setAttribute("class", "gallery__sample");
-
-      const imgContainer = document.createElement("section");
-      imgContainer.setAttribute("class", "image");
-
-      const span = document.createElement("span");
-
-      const descript = document.createElement("section");
-      descript.setAttribute("class", "gallery__sample__descript");
-
-      const name = document.createElement("h2");
-      name.setAttribute("class", "gallery__sample__descript-name");
-      name.innerHTML = this.title;
-      name.setAttribute("aria-label", this.title);
-      name.setAttribute("tabindex", "0");
-
-      const like = document.createElement("h3");
-      like.setAttribute("class", "gallery__sample__descript-like unliked");
-      like.innerHTML = this.likes;
-      like.setAttribute("tabindex", "0");
-      like.setAttribute("aria-label", "likes");
-
-      const heart = document.createElement("i");
-      heart.setAttribute("class", "fas fa-heart gallery__sample__descript-heart unliked");
-
-      if (this.source.includes("mp4")) {
-         const video = document.createElement("video");
-         video.setAttribute("src", "./Photos/Portfolio/" + this.source);
-         video.setAttribute("poster", `./Photos/Portfolio/mini${this.source.replace("mp4", "jpg")}`);
-         video.setAttribute("alt", this.altText);
-         video.setAttribute("tabindex", "0");
-         const subtitles = document.createElement("track");
-         subtitles.setAttribute("src", `./Photos/Portfolio/${this.source.replace("mp4", "vtt")}`);
-         subtitles.setAttribute("label", "Français");
-         subtitles.setAttribute("kind", "subtitles");
-         subtitles.setAttribute("srclang", "fr");
-         subtitles.setAttribute("default", "");
-         imgContainer.appendChild(video);
-         const errorMessage = document.createElement("p");
-         errorMessage.textContent = "Votre navigateur ne peut pas lire le format de vidéo proposé. Pensez à le mettre à jour";
-         video.appendChild(subtitles);
-         video.appendChild(errorMessage);
-
-         video.onclick = function () {
-            video.setAttribute("autoplay", "");
-         };
-      }
-
-      if (this.source.includes("jpg")) {
-         const image = document.createElement("img");
-         image.setAttribute("src", "./Photos/Portfolio/" + this.source);
-         image.setAttribute("alt", this.altText);
-         image.setAttribute("tabindex", "0");
-         span.appendChild(image);
-      }
-
-      article.appendChild(imgContainer);
-      imgContainer.appendChild(span);
-      article.appendChild(descript);
-      descript.appendChild(name);
-      descript.appendChild(like);
-      descript.appendChild(heart);
-
-      return article;
-   }
-}*/
 
 // Light Box
 
@@ -347,7 +244,6 @@ function lightbox() {
          nextBtn.setAttribute("tabindex", "0");
          closeIcon.setAttribute("tabindex", "0");
          clickImgIndex = newIndex; // On passe l'index de l'image cliquée à la variable clickImgIndex
-         // currentImg.children[0].remove();
          const video = document.createElement("video");
 
          function preview() {
@@ -449,12 +345,8 @@ function lightbox() {
 }
 
 function showGallery(list) {
-   //console.log(list);
    list.forEach((media) => {
-      //galleryContainer.appendChild(media.getHtml());
-      let mediaHtml = new mediaFactory(media);
-      //console.log(mediaHtml);
-      galleryContainer.appendChild(mediaHtml.getHtml());
+      galleryContainer.appendChild(media.getHtml());
    });
 }
 
