@@ -9,12 +9,10 @@ if (params && params.get("id")) {
          errorMsg();
       } else {
          fetchMediaByPhotographer(photographerId).then(function (mediaList) {
-            console.log(mediaList);
             const newList = mediaList.map((element) => {
                return new mediaFactory(element);
             });
             sortBy(newList);
-            console.log(newList);
             showGallery(newList);
             lightbox();
             liking();
@@ -110,7 +108,6 @@ class Image {
       image.setAttribute("alt", this.altText);
       image.setAttribute("tabindex", "0");
 
-      console.log(image);
       return image;
    }
 }
@@ -168,7 +165,6 @@ class mediaFactory {
       }
    }
    getHtml() {
-      console.log("ici");
       const article = document.createElement("article");
       article.setAttribute("class", "gallery__sample");
 
@@ -196,12 +192,10 @@ class mediaFactory {
       heart.setAttribute("class", "fas fa-heart gallery__sample__descript-heart unliked");
 
       if (this.source.includes("jpg")) {
-         console.log("1");
          span.appendChild(this.image.getImage());
       }
 
       if (this.source.includes("mp4")) {
-         console.log("2");
          imgContainer.appendChild(this.video.getVideo());
       }
 
