@@ -114,6 +114,7 @@ class Image {
    getImage() {
       if (this.source.includes("jpg")) {
          const image = document.createElement("img");
+         console.log(image);
          const span = document.createElement("span");
          image.setAttribute("src", "./Photos/Portfolio/" + this.source);
          image.setAttribute("alt", this.altText);
@@ -167,13 +168,22 @@ class Video {
 
 class mediaFactory {
    constructor(data) {
+      this.id = data.id;
+      this.photographerId = data.photographerId;
+      this.title = data.title;
+      this.tags = data.tags;
+      this.likes = data.likes;
+      this.date = data.date;
+      this.price = data.price;
+      this.altText = data.altText;
       if ("image" in data) {
-         let image = new Image(data);
-         image.getImage();
+         return new Image(data);
+         //image.getImage();
       }
       if ("video" in data) {
-         let video = new Video(data);
-         video.getVideo();
+         return new Video(data);
+         //video.getVideo();
+         //console.log(video);
       }
    }
 
@@ -439,12 +449,12 @@ function lightbox() {
 }
 
 function showGallery(list) {
+   //console.log(list);
    list.forEach((media) => {
       //galleryContainer.appendChild(media.getHtml());
       let mediaHtml = new mediaFactory(media);
+      //console.log(mediaHtml);
       galleryContainer.appendChild(mediaHtml.getHtml());
-      //galleryContainer.appendChild(mediaHtml.getImage());
-      //galleryContainer.appendChild(mediaHtml.getVideo());
    });
 }
 
